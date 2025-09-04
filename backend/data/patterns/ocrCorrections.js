@@ -50,24 +50,28 @@ const OCR_CORRECTIONS = {
 
   // Price corrections
   priceCorrections: [
-    { from: /150\.007/i, to: "1150.00" },
-    { from: /1150/i, to: "1150.00" },
-    { from: /(\d+)\.(\d{3})/i, to: "$1$2.00" }, // Fix decimal places
-    { from: /(\d+),(\d{3})/i, to: "$1$2" }, // Remove commas
-    { from: /₱\s*(\d+)/i, to: "$1" }, // Remove peso symbol
-    { from: /PHP\s*(\d+)/i, to: "$1" }, // Remove PHP text
+  { from: /150\.007/i, to: "1150.00" },
+  { from: /1150(?!\.\d+)/i, to: "1150.00" }, // only plain 1150
+  { from: /(\d+)\.(\d{2})\d*/g, to: "$1.$2" }, // trim after 2 decimals
+  { from: /(\d+),(\d{3})/g, to: "$1$2" }, // remove commas
+  { from: /₱\s*(\d+)/i, to: "$1" }, // remove peso symbol
+  { from: /PHP\s*(\d+)/i, to: "$1" } // remove PHP text
   ],
+
 
   // Store name corrections
   storeCorrections: [
+    { from: /^\s*eroury\s+drug\s*$/i, to: "MERCURY DRUG" },
     { from: /NRORY/i, to: "MERCURY" },
     { from: /JRY\s+DRUG/i, to: "MERCURY DRUG" },
-    { from: /[h|m]?ercury\s+d?rug/gi, to: "MERCURY DRUG" },
+    // { from: /[h|m]?ercury\s+d?rug/gi, to: "MERCURY DRUG" },
+    { from: /\b(?:h|m)?ercury\s+d?rug\b/gi, to: "MERCURY DRUG" }, 
     { from: /Shera\s+Yor\s+Naglro/gi, to: "MERCURY DRUG" },
     { from: /NERO\s+DRUG/gi, to: "MERCURY DRUG" },
     { from: /MERCURV\s+DRUQ/i, to: "MERCURY DRUG" },
     { from: /MERCURV\s+DRUG/i, to: "MERCURY DRUG" },
     { from: /MERCURY\s+DRUQ/i, to: "MERCURY DRUG" },
+    { from: /^MERCURY\s+DRUG$/i, to: "MERCURY DRUG" },
     { from: /SM\s+HVPERMARKET/i, to: "SM HYPERMARKET" },
     { from: /SM\s+SUPERMARKET/i, to: "SM SUPERMARKET" },
     { from: /ROBINSONS\s+MALL/i, to: "ROBINSONS MALL" },
@@ -76,15 +80,18 @@ const OCR_CORRECTIONS = {
     { from: /\(\@\s*rob;\s*in:\s*<0\.\s*Br\s*Easgniatie/gi, to: "ROBINSONS SUPERMARKET" },
     { from: /rob;\s*in:\s*<0\.\s*Br\s*Easgniatie/gi, to: "ROBINSONS SUPERMARKET" },
     { from: /PUREGOLD/i, to: "PUREGOLD" },
+    { from: /R[uo]regald/i, to: "PUREGOLD" },
     { from: /SAVEMORE/i, to: "SAVEMORE" },
     { from: /7-ELEVEN/i, to: "7-ELEVEN" },
   ],
 
   // Product name corrections
   productCorrections: [
+    { from: /^\d+\s+BONAKID\s*P-?S\s*3\+\s*2\.4(?:[gq9])?$/i, to: "BONAKID P-S 3+ 2.4g" },
     { from: /BBRAND\s+JR\s+2\.dkg/i, to: "BBRAND JR 2.4kg" },
     { from: /BBRAND\s+JR\s+2\.4kq/i, to: "BBRAND JR 2.4kg" },
     { from: /barand\s+jr/i, to: "BBRAND JR" },
+    { from: /^BEARBRANDI00$/i, to: "BEAR BRAND 300g" },
     {
       from: /45000\s*a\s*RTIFIED/i,
       to: "BEAR BRAND FORTIFIED",
@@ -98,6 +105,10 @@ const OCR_CORRECTIONS = {
       to: "BEAR B FORT2400g",
     },
     { from: /BEAR\s+BIECRTEA0/i, to: "BEAR B FORT840g" },
+    { from: /BEAR\s+8\s+FORTI000/i, to: "BEAR B FORT300g"},
+    { from: /^BEAR\s*BRAND\s*(?:I00|l00|100)$/i, to: "BEAR BRAND 300g" },
+    { from: /^BEARBRAND(?:I00|l00|100)$/i, to: "BEAR BRAND 300g" },
+    
     { from: /WIDO3HPRE-51\s*6KG/i, to: "NIDO3+PRE-S1.6KG" },
     { from: /MIO034PRE-S7./i, to: "NIDO3+PRE-S2.4KG" },
   ],

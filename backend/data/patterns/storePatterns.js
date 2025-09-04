@@ -6,12 +6,15 @@
 const STORE_PATTERNS = {
   // Mercury Drug patterns (specific to pharmacy receipts)
   mercuryDrug: [
-    /(MERCURY\s+DRUG\s+[A-Z]+)/i,
-    /(MERCURY\s+DRUG)/i,
-    /(SOUTHERN\s+LUZON\s+DRUG\s+CORPORATION)/i,
-    /(MERCURY\s+DRUG\s+LUCBAN)/i,
-    /(MERCURY\s+DRUG\s+NAKAGISIGURO)/i,
-    /(MERCURY\s+DRUG\s+[A-Z\s]+)/i, // More flexible pattern
+    // /(MERCURY\s+DRUG\s+[A-Z]+)/i,
+    // /(MERCURY\s+DRUG)/i,
+    /^MERCURY\s+DRUG$/i,
+    /\bMERCURY\s+DRUG\b/i,
+    /^eroury\s+drug$/i
+    // /(SOUTHERN\s+LUZON\s+DRUG\s+CORPORATION)/i,
+    // /(MERCURY\s+DRUG\s+LUCBAN)/i,
+    // /(MERCURY\s+DRUG\s+NAKAGISIGURO)/i,
+    // /(MERCURY\s+DRUG\s+[A-Z\s]+)/i, // More flexible pattern
   ],
 
   // Savemore Market patterns (specific to Savemore receipts)
@@ -49,9 +52,9 @@ const STORE_PATTERNS = {
 
   // Keywords for fallback detection
   keywords: {
+    robinsons: ["ROBINSONS", "MALL", "ROBINSON'S"],
     sm: ["SM", "HYPERMARKET", "SUPERMARKET"],
     mercury: ["MERCURY", "DRUG", "SOUTHERN LUZON"],
-    robinsons: ["ROBINSONS", "MALL", "ROBINSON'S"],
     puregold: ["PUREGOLD"],
     savemore: ["SAVEMORE"],
     sevenEleven: ["7-ELEVEN", "7ELEVEN", "SEVEN ELEVEN"],
