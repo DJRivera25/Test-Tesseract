@@ -69,12 +69,21 @@ const OCR_CORRECTIONS = {
     { from: /MERCURV\s+DRUG/i, to: "MERCURY DRUG" },
     { from: /MERCURY\s+DRUQ/i, to: "MERCURY DRUG" },
     { from: /SM\s+HVPERMARKET/i, to: "SM HYPERMARKET" },
+    { from: /SMHYPERMARKET/i, to: "SM HYPERMARKET" },
     { from: /SM\s+SUPERMARKET/i, to: "SM SUPERMARKET" },
+    { from: /SMSUPERMARKET/i, to: "SM SUPERMARKET" },
+    { from: /SAVEHORE WARKET HEYCAUAYAN SUPIHA/i, to: "SAVEMORE MARKET MEYCAUAYAN SUPIMA" },
     { from: /ROBINSONS\s+MALL/i, to: "ROBINSONS MALL" },
+    { from: /=r Al EiISons NN./i, to: "ROBINSONS" },
+    { from: /Robinsons Easyrorrt oe/i, to: "ROBINSONS EASY MART" },
+    { from: /~Permarke;/i, to: "SUPERMARKET" },
     { from: /@\s*RElDmore/gi, to: "SAVEMORE" },
     { from: /@\s*RElDmore/gi, to: "SAVEMORE" },
     { from: /\(\@\s*rob;\s*in:\s*<0\.\s*Br\s*Easgniatie/gi, to: "ROBINSONS SUPERMARKET" },
     { from: /rob;\s*in:\s*<0\.\s*Br\s*Easgniatie/gi, to: "ROBINSONS SUPERMARKET" },
+    { from: /puregeld Frist Clb, DE. y/i, to: "PUREGOLD PRICE CLUB" },
+    { from: /Puregatd Price Clo, Inc/i, to: "PUREGOLD PRICE CLUB" },
+    { from: /Pareyid Price Club, Ing/i, to: "PUREGOLD PRICE CLUB" },
     { from: /PUREGOLD/i, to: "PUREGOLD" },
     { from: /SAVEMORE/i, to: "SAVEMORE" },
     { from: /7-ELEVEN/i, to: "7-ELEVEN" },
@@ -89,8 +98,8 @@ const OCR_CORRECTIONS = {
     { from: /Robinsons\s+ga\s+gyi/i, to: "ROBINSONS EASYMART" },
     { from: /\[?Neste\s+Official\s+Store/i, to: "NESTLE OFFICIAL STORE" },
     { from: /le\s*ii,/i, to: "NESTLE STORE" },
-
-
+    { from: /FAIR VAlUE WiRTS The,/i, to: "FAIR VALUE MARTS" },
+    { from: /Abfamart/i, to: "Alfamart" },
 
 
   ],
@@ -2554,8 +2563,195 @@ const OCR_CORRECTIONS = {
       {
           from: /K1tKat\s*B1tes\s*40G/i,
           to: "KitKat Bites 40G"
-      }
-
+      },
+    { from: /BBRAND\s+JR\s+2\.dkg/i, to: "BBRAND JR 2.4kg" },
+    { from: /BBRAND\s+JR\s+2\.4kq/i, to: "BBRAND JR 2.4kg" },
+    { from: /BY BHD AR 2.4KG/i, to: "BBRAND JR 2.4kg" },
+    { from: /Bear Brand 2.0kg/i, to: "BBRAND 2.4kg" },
+    { from: /BBRANDPMDZ. 4KG/i, to: "BBRAND 2.4kg" },
+    { from: /barand\s+jr/i, to: "BBRAND JR" },
+    {
+      from: /45000\s*a\s*RTIFIED/i,
+      to: "BEAR BRAND FORTIFIED",
+    },
+    {
+      from: /oo. Bear Brand Fortified Powdered Milk./i,
+      to: "BEAR BRAND FORTIFIED",
+    },
+    {
+      from: /= Bear Brand Fortified Powdered Milk Dr./i,
+      to: "BEAR BRAND FORTIFIED",
+    },
+    {
+      from: /Bear Brand Fortified Powdered Milk/i,
+      to: "BEAR BRAND FORTIFIED",
+    },
+    {
+      from: /All Fi 12100 Fo/i,
+      to: "BEAR BRAND FORTIFIED",
+    },
+    {
+      from: /ea Brand Forfed Rowcdored MIKO./i,
+      to: "BEAR BRAND FORTIFIED",
+    },
+    {
+      from: /Bear Brand Fortified Po./i,
+      to: "BEAR BRAND FORTIFIED",
+    },
+    {
+      from: /Bear Brand Adult Plus Milk Powder with Coff,/i,
+      to: "BEAR BRAND ADULT PLUS COFFEE",
+    },
+    {
+      from: /Bear Brand Adult Plus Mik Powder 12./i,
+      to: "BEAR BRAND ADULT PLUS",
+    },
+    {
+      from: /Bee Bnd tis./i,
+      to: "BEAR BRAND STERILIZED",
+    },
+    {
+      from: /ROBRBRAND STER 200m1/i,
+      to: "BEAR BRAND STERILIZED",
+    },
+    {
+      from: /52 Fortified Pour i Pe/i,
+      to: "BEAR BRAND FORTIFIED2400g"
+    },
+    {
+      from: /BEAR\s+B\s+FORT24000/i,
+      to: "BEAR BRAND FORTIFIED2400g",
+    },
+    {
+      from: /bere dered/i,
+      to: "BEAR BRAND",
+    },
+    {
+      from: /Eron Forte oucrsd/i,
+      to: "BEAR BRAND FORTIFIED2400g",
+    },
+    {
+      from: /4a Bear Brand Fortified Powdered Mik Drink 2.4/i,
+      to: "BEAR BRAND FORTIFIED2400g",
+    },
+    {
+      from: /Boar brand Fortfed Powdered Milk/i,
+      to: "BEAR BRAND FORTIFIED",
+    },
+    {
+      from: /«© Bear Brand Fortified Powdered Mik Dr/i,
+      to: "BEAR BRAND FORTIFIED",
+    },
+    {
+      from: /Bear Brand Fortified Powdered Milk Dr.../i,
+      to: "BEAR BRAND FORTIFIED",
+    },
+    {
+      from: /Ja Bear Ernd Frid Podred ik Dik 0./i,
+      to: "BEAR BRAND FORTIFIED",
+    },
+    {
+      from: /anoal ae te CROCCO TKG/i,
+      to: "BEAR BRAND FORTIFIED CHOCO 1KG",
+    },
+    { 
+      from: /BEAR\s+BIECRTEA0/i, 
+      to: "BEAR BRAND FORTIFIED840g" 
+    },
+    {
+      from: /Bhs Bear Brand Fortified Ready-to-Dri.../i,
+      to: "BEAR BRAND FORTIFIED Ready-to-Drink",
+    },
+    {
+      from: /WILK/i,
+      to: "MILK",
+    },
+    {
+      from: /ee Cerelac Homestyle Meals Rice an.../i,
+      to: "CERELAC Homestyle Meals Rice and Chicken Porridge ",
+    },
+    {
+      from: /Cerelac Mixed Vegetables & Soya .../i,
+      to: "CERELAC Mixed Vegetable & Soya Infant Cereal",
+    },
+    {
+      from: /HILO CHORD 1KG/i,
+      to: "MILO CHOCO 1KG",
+    },
+    {
+      from: /nk Choco 8405/i,
+      to: "Milk Choco 840g",
+    },
+    {
+      from: /0 ACTIG0 PRON T 1385/i,
+      to: "Milo Activ-Go Choco Malt Powdered Milk Drink ",
+    },
+    {
+      from: /Hilofet veGForss/i,
+      to: "Milo Activ-Go Choco Malt Powdered Milk Drink ",
+    },
+    {
+      from: /i SO 0 Choco Drink 99.00 E/i,
+      to: "Nestle Milo Choco Drink",
+    },
+    {
+      from: /Milo Powdered Choc./i,
+      to: "Nestle Milo Powdered Choco Drink",
+    },
+    {
+      from: /<7 ilo Powdered Choco Malt Mk Dink/i,
+      to: "Nestle Milo Powdered Choco Drink",
+    },
+    {
+      from: /Mia Poudered Choco Mal Milk Drink./i,
+      to: "Nestle Milo Powdered Choco Drink",
+    },
+    {
+      from: /LZ Mio Podered Choco ali kD.../i,
+      to: "Nestle Milo Powdered Choco Drink",
+    },
+    {
+      from: /il Powdered Chaco al Din/i,
+      to: "Nestle Milo Powdered Choco Drink",
+    },
+    {
+      from: /Mio Powdered Choco Malt Mik Drink.../i,
+      to: "Nestle Milo Powdered Choco Drink",
+    },
+    {
+      from: /Lr r——/i,
+      to: "MILO Ready to Drink (RTD)",
+    },
+    {
+      from: /a Koko Kiunch Breakfast Cereal 15g - pack./i,
+      to: "KOKO KRUNCH 15g",
+    },
+    {
+      from: /= Chuckie Chocolate Favoured Mik./i,
+      to: "CHUCKIE Chocolate-Flavoured Milk ",
+    },
+    {
+      from: /_ Nestea Cleanse Lemon Cucumber Po./i,
+      to: "NESTEA Cleanse Lemon Cucumber Powdered Green Tea",
+    },
+    {
+      from: /NESCAFE\s+GOLD\s+29/i,
+      to: "NESCAFE GOLD 2g",
+    },
+    {
+      from: /CO EEN TE Teo/i,
+      to: "NESTLE COFFEE MATE 150g",
+    },
+    {
+      from: /Nstle Cfaated00g/i,
+      to: "NESTLE COFFEE MATE 400g",
+    },
+    
+    
+    { from: /WIDO3HPRE-51\s*6KG/i, to: "NIDO3+PRE-S1.6KG" },
+    { from: /MIO034PRE-S7./i, to: "NIDO3+PRE-S2.4KG" },
+    { from: /nib EEER eh 5/i, to: "NIDO3+PRE-S2.4KG" },
+    { from: /5 IDO 5+ Powdered Mik Drink gor Pr./i, to: "NIDO5+" },
   ],
   };
 
