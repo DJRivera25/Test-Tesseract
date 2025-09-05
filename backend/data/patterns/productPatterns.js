@@ -6,70 +6,8 @@
 const PRODUCT_PATTERNS = {
   specificProducts: [
     {
-      name: "Bear Brand Adult Plus 33g",
-      patterns: [
-        // BBRAND variations
-        /BBRAND\s+Adult\s+Plus\s*33g/i,
-        /BBRAND\s+AdultPlus\s*33g/i,
-        /BBRANDAdultPlus\s*33g/i,
-        /BBRAND\s*Adult\s*Plus\s*33g/i,
-
-        // Bear Brand variations
-        /Bear\s+Brand\s+Adult\s+Plus\s*33g/i,
-        /Bear\s+Brand\s+AdultPlus\s*33g/i,
-        /Bear\s+Brand\s*AdultPlus\s*33g/i,
-        /BearBrand\s+Adult\s+Plus\s*33g/i,
-        /BearBrand\s+AdultPlus\s*33g/i,
-        /BearBrand\s*AdultPlus\s*33g/i,
-        /BearBrandAdultPlus\s*33g/i,
-
-        // BearB variations
-        /BearB\s+Adult\s+Plus\s*33g/i,
-        /BearB\s+AdultPlus\s*33g/i,
-        /BearB\s*AdultPlus\s*33g/i,
-        /BearBAdultPlus\s*33g/i,
-
-        // BB variations
-        /BB\s+Adult\s+Plus\s*33g/i,
-        /BB\s+AdultPlus\s*33g/i,
-        /BB\s*AdultPlus\s*33g/i,
-        /BBAdultPlus\s*33g/i,
-
-        // NESTLE variations
-        /NESTLE\s+BB\s+Adult\s+Plus\s*33g/i,
-        /NESTLE\s+BB\s+AdultPlus\s*33g/i,
-        /NESTLE\s*BB\s*AdultPlus\s*33g/i,
-        /NESTLE\s+BBAdultPlus\s*33g/i,
-        /NESTLEBBAdultPlus\s*33g/i,
-        /NESTLE\s+Adult\s+Plus\s*33g/i,
-        /NESTLE\s+AdultPlus\s*33g/i,
-        /NESTLE\s*AdultPlus\s*33g/i,
-        /NESTLEAdultPlus\s*33g/i,
-        /NESTLE\s+BBAD\s*33g/i,
-        /NESTLE\s*BBAD\s*33g/i,
-        /NESTLEBBAD\s*33g/i,
-
-        // NSTL variations
-        /NSTL\s+BB\s+Adult\s+Plus\s*33g/i,
-        /NSTL\s+BB\s+AdultPlus\s*33g/i,
-        /NSTL\s*BB\s*AdultPlus\s*33g/i,
-        /NSTL\s+BBAdultPlus\s*33g/i,
-        /NSTL\s*BBAdultPlus\s*33g/i,
-        /NSTLBBAdultPlus\s*33g/i,
-        /NSTL\s+BBAD\s*33g/i,
-        /NSTL\s*BBAD\s*33g/i,
-        /NSTLBBAD\s*33g/i,
-
-        // NEST variations
-        /NEST\s+BBAD\s*33g/i,
-        /NEST\s*BBAD\s*33g/i,
-        /NESTBBAD\s*33g/i,
-        /NEST\s+BB\s+Adult\s+Plus\s*33g/i,
-        /NEST\s+BB\s+AdultPlus\s*33g/i,
-        /NEST\s*BB\s*AdultPlus\s*33g/i,
-        /NEST\s+BBAdultPlus\s*33g/i,
-        /NESTBBAdultPlus\s*33g/i,
-      ],
+      name: "Nestle Milo",
+      patterns: [/(MILO\s+\d+[gml])\s+([\d,]+\.?\d*)/i, /(NESTLE\s+MILO\s+\d+[gml])\s+([\d,]+\.?\d*)/i],
     },
     {
       name: "Bear Brand Adult Plus Coffee 33g",
@@ -1566,7 +1504,12 @@ const PRODUCT_PATTERNS = {
     },
     {
       name: "Bear Brand Fortified",
-      patterns: [/45000\s*a\s*RTIFIED/i, /BEAR\s+B\s+FORT\d+[A-Za-z]*/i, /BEAR\s+BIECRTEA0/i, /BEAR\s+8\s+FORTI000/i], 
+      patterns: [
+        /45000\s*a\s*RTIFIED/i,
+        /BEAR\s+B\s+FORT\d+[A-Za-z]*/i,
+        /BEAR\s+BIECRTEA0/i,
+        /BEAR\s+BRANC(\s+PDR\s+MILK\s+\d+G)?/i,
+      ],
     },
     {
       name: "Nescafe Gold 2g",
@@ -1578,18 +1521,49 @@ const PRODUCT_PATTERNS = {
     },
     {
       name: "NIDO3+PRE-S2.4KG",
-      patterns: [/MIO034PRE-S7./i, /NIDO3\+PRE-S2\.4KG/i, ],
+      patterns: [/MIO034PRE-S7./i, /NIDO3\+PRE-S2\.4KG/i],
+    },
+    {
+      name: "MiloActiveGo1kg",
+      patterns: [/Milo\s*Act\s*ive\s*Golk?a/i, /MiloActiveGo1kg/i],
+    },
+    {
+      name: "Milo Actigen E Sachet 22G",
+      patterns: [/MILO\s+ACTIGEN\s*E\s+SACHET\s*22G/i, /MILO\s+ACTIGEN\s*E\s+SACHET\s*\(24G\)/i, /MILO\s+ACTIGEN\s*E/i],
+    },
+    {
+      name: "Milo Activ-Go Winner TWN PCK 48G",
+      patterns: [/MILO\s+ACTIV[- ]GO\s+WINNER\s+TWN\s+PCK\s+48G/i, /MILO\s+ACTIV[- ]GO\s+WINNER/i],
+    },
+    {
+      name: "Nestle KokoCrunch",
+      patterns: [/NESTLE\s+KokoCrunch\s*El\s*oo\s*2\.00\s*i/i, /(NESTLE\s+KOKOCRUNCH)/i],
+    },
+    {
+      name: "BEAR BRAND FCM 700G",
+      patterns: [/.*BEAR\s+BRAND\s+FCM\s*(\d+)[0Oo]/i],
+    },
+    {
+      name: "CHUCKIE 110ml",
+      patterns: [/CH[Uu][Cc][Kk][Ii1][Ee]\s*110m[l1I]/i],
+    },
+    {
+      name: "NIDO JR. MILK 2.4kg 1384.00", // can't be read by ocr as product
+      patterns: [
+        /NIDO\s*JR\.?\s*MILK\s*2\.4KG(?:\s*\d+\.?\d{0,2})?/i,
+        /NIDO\s*JR\s*\.?\s*mlKZ\.?\s*dk\s*1384(?:\.0*7)?/i,
+      ],
     },
 
     {
-      name: "BONAKID P-S 3+ 2.4kg",
-      patterns: [
-        /^\d+\s+BONAKID\s*P-?S\s*3\+\s*2\.4$/i,
-        /^\d+\s+BONAKID\s*P-?S\s*3\+\s*2\.4[kKgGq9]?$/i
-      ]
-    }
+      name: "BBRAND W-IRON 680G",
+      patterns: [/BBRAND\s*W-IRON\s*680G/i, /BEAR\s*BRAND\s*W-?IRON\s*680G/i, /BBRAND\s*W-IRON\s*68O0?G/i],
+    },
 
-
+    {
+      name: "BBRAND W-IRON 680G",
+      patterns: [/BBRAND\s*W-IRON\s*680G/i, /BEAR\s*BRAND\s*W-?IRON\s*680G/i, /BBRAND\s*W-IRON\s*68O0?G/i],
+    },
   ],
 
   // Generic patterns removed - now handled by smart detection in ocrHelpers.js
@@ -1614,7 +1588,7 @@ const PRODUCT_PATTERNS = {
     { pattern: /150\.007/i, replacement: "1150.00" },
     { pattern: /1150/i, replacement: "1150.00" },
     { pattern: /(\d+)\.(\d{3})/i, replacement: "$1$2.00" }, // Fix decimal places
-    { from: /150\.007/i, to: "1150.00" },
+    { pattern: /(\d{2,})(00)\b/, replacement: "$1.00" },
   ],
 };
 
@@ -1682,42 +1656,9 @@ const PRODUCT_CATEGORIES = {
     "milk",
     "baby food",
     "bear brand fortified",
-    "bear brand adult plus 33g",
-    "bear brand adult plus coffee 33g",
-    "bear brand adult plus coffee 300g",
-    "bear brand adult plus 300g",
-    "bear brand adult plus 600g",
-    "bear brand adult plus 1200g",
-    "bear brand choco 29g",
-    "bear brand fortified powdered milk 300g",
-    "bear brand fortified powdered milk 33g",
-    "bear brand powdered milk choco 840g",
-    "bear brand fortified powdered milk 680g",
-    "bear brand fortified powdered milk 840g",
-    "bear brand fortified powdered milk 1210g",
-    "bear brand fortified powdered milk 1500g",
-    "bear brand fortified powdered milk 2000g",
-    "bear brand fortified powdered milk 2400g",
-    "bear brand sterilized 200ml",
-    "bear brand sterilized uht milk 1l",
-    "nestle fresh milk hi-calcium 1l",
-    "nestle all-purpose cream 125ml",
     "nido 3+ pre-s1.6kg",
-  ],
-  condiments: [
-    "maggi oyster sauce 300ml",
-    "maggi oyster sauce 300ml pack of 2",
-    "maggi savor calamansi 130ml pack of 2",
-    "maggi savor calamansi 130ml",
-    "maggi savor classic liquid seasoning 130ml",
-    "maggi magic sarap all-in-one seasoning granules 8g pack of 16",
-    "maggi magic sarap all-in-one seasoning granules 8g",
-    "maggi savor chilimansi liquid seasoning 130ml pack of 2",
-    "maggi kari noodles 79g",
-    "maggi kari noodles 79g pack of 5",
-    "maggi sampalok mix 25g",
-    "maggi sampalok mix 210g pack of 10",
-    "maggi ginisahog 28g",
+    "nido jr. milk",
+    "NIDO JR. MILK 2.4kg",
   ],
   personal: ["shampoo", "toothpaste", "deodorant"],
   grocery: ["rice", "oil", "sugar", "flour"],
