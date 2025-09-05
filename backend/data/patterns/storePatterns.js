@@ -10,7 +10,7 @@ const STORE_PATTERNS = {
     // /(MERCURY\s+DRUG)/i,
     /^MERCURY\s+DRUG$/i,
     /\bMERCURY\s+DRUG\b/i,
-    /^eroury\s+drug$/i
+    /^eroury\s+drug$/i,
     // /(SOUTHERN\s+LUZON\s+DRUG\s+CORPORATION)/i,
     // /(MERCURY\s+DRUG\s+LUCBAN)/i,
     // /(MERCURY\s+DRUG\s+NAKAGISIGURO)/i,
@@ -29,12 +29,7 @@ const STORE_PATTERNS = {
   ],
 
   // Nestlé Store patterns
-  nestleStore: [
-    /(NESTL[EÉ]\s+STORE)/i,    
-    /(NESTLE\s+STORE)/i,       
-    /.*Nestlé\s+Store\.?/i,  
-    /.*Nestlé\s+Store/i,        
-  ],
+  nestleStore: [/(NESTL[EÉ]\s+STORE)/i, /(NESTLE\s+STORE)/i, /.*Nestlé\s+Store\.?/i, /.*Nestlé\s+Store/i],
 
   // Nestle PH patterns
   nestlePH: [
@@ -47,15 +42,12 @@ const STORE_PATTERNS = {
   ],
 
   // Everwin Mart patterns
-  everwinMart: [
-    /(EVERWIN\s+MART\s*\(MALOLOS\))/i,
-    /(EVERWIN\s+MART)/i,   
-  ],
+  everwinMart: [/(EVERWIN\s+MART\s*\(MALOLOS\))/i, /(EVERWIN\s+MART)/i],
 
   puregold: [
     /(PUREGOLD\s+SUPERMARKET)/i,
     /(PUREGOLD)/i,
-    /pure[gq0o]ld/i, 
+    /pure[gq0o]ld/i,
     /pure[gq]o?ld\s*price\s*cl[ui][bck][\s,]*(inc\.?)?/i,
   ],
 
@@ -67,9 +59,7 @@ const STORE_PATTERNS = {
     /.*\bwaltermart\b.*/i,
   ],
 
-  alturas: [
-    /(altu[rn]as?|wus)\s+sup(e|ai|ei|er|ar)[a-z]*.*corp/i
-  ],
+  alturas: [/(altu[rn]as?|wus)\s+sup(e|ai|ei|er|ar)[a-z]*.*corp/i],
 
   // Major Philippine retailers
   majorRetailers: [
@@ -87,8 +77,6 @@ const STORE_PATTERNS = {
     /^([A-Z\s]+(?:HYPERMARKET|SUPERMARKET|MARKET|STORE|SHOP|MALL))/i,
     /^([A-Z\s]+(?:INC|CORP|LLC))/i,
     /^([A-Z\s]{3,}(?:HYPERMARKET|SUPERMARKET|MARKET|STORE))/i,
-    
-
   ],
 
   // Address-based patterns
@@ -96,12 +84,8 @@ const STORE_PATTERNS = {
 
   // Keywords for fallback detection
   keywords: {
-<<<<<<< HEAD
     robinsons: ["ROBINSONS", "MALL", "ROBINSON'S"],
     sm: ["SM", "HYPERMARKET", "SUPERMARKET"],
-=======
-    sm: ["SM", "HYPERMARKET"],
->>>>>>> 2e94e85912bc04b582c01515b3f55774d1847822
     mercury: ["MERCURY", "DRUG", "SOUTHERN LUZON"],
     puregold: ["PUREGOLD"],
     savemore: ["SAVEMORE"],
@@ -110,8 +94,7 @@ const STORE_PATTERNS = {
     nestlePH: ["NESTLE PH", "NESTLÉ PH", "NESTLE PHILIPPINES", "NESTLÉ PHILIPPINES"],
     everwin: ["EVERWIN", "MALOLOS"],
     walterMart: ["WALTERMART", "WALTER", "WALTERMART SUPERMARKET"],
-    alturas: ["ALTURAS", "ALTURAS SUPERMARKET", "ALTURAS SUPERMARKET CORP"]
-
+    alturas: ["ALTURAS", "ALTURAS SUPERMARKET", "ALTURAS SUPERMARKET CORP"],
   },
 };
 
@@ -130,9 +113,6 @@ const STORE_NAME_MAPPINGS = {
   puregold: "PUREGOLD",
   walterMart: "WALTERMART SUPERMARKET",
   alturas: "ALTURAS SUPERMARKET CORP",
-
-
-
 };
 
 // Store categories for better organization
