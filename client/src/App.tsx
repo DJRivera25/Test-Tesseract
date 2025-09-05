@@ -246,37 +246,149 @@ function App() {
                             <span className="font-medium">Processing Time:</span> {result.ocr.processingTime}ms
                           </div>
                           <div>
-                            <span className="font-medium">Items Found:</span> {result.ocr.items.length}
+                            <span className="font-medium">Total Items Detected:</span> {result.ocr.items.length}
+                          </div>
+                          <div>
+                            <span className="font-medium">✅ Fully Matched:</span>{" "}
+                            {result.ocr.items.filter((item: any) => item.matched).length}
+                          </div>
+                          <div>
+                            <span className="font-medium">🎯 Pattern Only:</span>{" "}
+                            {
+                              result.ocr.items.filter(
+                                (item: any) => !item.matched && item.specificProduct && item.specificProduct.matched
+                              ).length
+                            }
+                          </div>
+                          <div>
+                            <span className="font-medium">❌ No Match:</span>{" "}
+                            {
+                              result.ocr.items.filter(
+                                (item: any) => !item.matched && (!item.specificProduct || !item.specificProduct.matched)
+                              ).length
+                            }
                           </div>
                         </div>
                       </div>
 
-                      {result.ocr.items.length > 0 && (
-                        <div className="bg-white border border-gray-200 rounded-lg p-4">
-                          <h4 className="font-medium text-gray-900 mb-3">Matched Items</h4>
-                          <div className="space-y-2">
-                            {result.ocr.items.map((item: any, index: number) => (
+                      {/* All Products with Match Status Indicators */}
+                      <div className="bg-white border border-gray-200 rounded-lg p-4">
+                        <h4 className="font-medium text-gray-900 mb-3">📋 All Detected Products</h4>
+                        <div className="space-y-3">
+                          {result.ocr.items.map((item: any, index: number) => {
+                            // Determine the match status and styling
+                            let statusColor = "gray";
+                            let statusIcon = "❌";
+                            let statusText = "No Pattern Match";
+                            let statusDescription = "Not in approved product patterns";
+
+                            if (item.matched) {
+                              // Full match (pattern + database)
+                              statusColor = "green";
+                              statusIcon = "✅";
+                              statusText = "Fully Matched";
+                              statusDescription = "Pattern matched + database verified";
+                            } else if (item.specificProduct && item.specificProduct.matched) {
+                              // Pattern match only (no database)
+                              statusColor = "yellow";
+                              statusIcon = "🎯";
+                              statusText = "Pattern Matched Only";
+                              statusDescription = "Matched pattern but not in database";
+                            }
+
+                            const bgColor =
+                              statusColor === "green"
+                                ? "bg-green-50"
+                                : statusColor === "yellow"
+                                ? "bg-yellow-50"
+                                : "bg-gray-50";
+                            const borderColor =
+                              statusColor === "green"
+                                ? "border-green-200"
+                                : statusColor === "yellow"
+                                ? "border-yellow-200"
+                                : "border-gray-200";
+                            const textColor =
+                              statusColor === "green"
+                                ? "text-green-800"
+                                : statusColor === "yellow"
+                                ? "text-yellow-800"
+                                : "text-gray-600";
+
+                            return (
                               <div
                                 key={index}
-                                className="flex justify-between items-center py-2 border-b border-gray-100 last:border-b-0"
+                                className={`flex justify-between items-center p-3 rounded border ${bgColor} ${borderColor}`}
                               >
-                                <div>
-                                  <p className="font-medium">{item.name}</p>
-                                  {item.matched && item.matchedProduct && (
-                                    <p className="text-sm text-gray-600">
-                                      Matched: {item.matchedProduct.name} ({item.matchedProduct.brand})
+                                <div className="flex-1">
+                                  <div className="flex items-center gap-2 mb-1">
+                                    <span className="text-lg">{statusIcon}</span>
+                                    <p className={`font-medium ${textColor}`}>{item.name}</p>
+                                  </div>
+                                  <p
+                                    className={`text-sm ${
+                                      textColor === "text-green-800"
+                                        ? "text-green-600"
+                                        : textColor === "text-yellow-800"
+                                        ? "text-yellow-600"
+                                        : "text-gray-500"
+                                    }`}
+                                  >
+                                    {statusDescription}
+                                  </p>
+                                  {item.specificProduct && (
+                                    <p className="text-sm text-blue-600 mt-1">
+                                      🎯 Pattern: {item.specificProduct.name} ({item.specificProduct.pattern})
+                                    </p>
+                                  )}
+                                  {item.matchedProduct && (
+                                    <p className="text-sm text-green-600 mt-1">
+                                      ✅ Product: {item.matchedProduct.name} ({item.matchedProduct.brand})
                                     </p>
                                   )}
                                 </div>
-                                <div className="text-right">
-                                  <p className="font-medium">₱{item.totalPrice}</p>
-                                  {item.matched && <p className="text-sm text-green-600">+{item.points} pts</p>}
+                                <div className="text-right ml-4">
+                                  <p className={`font-medium ${textColor}`}>₱{item.totalPrice}</p>
+                                  {item.points > 0 && <p className="text-sm text-green-600">+{item.points} pts</p>}
+                                  <p
+                                    className={`text-xs ${
+                                      textColor === "text-green-800"
+                                        ? "text-green-600"
+                                        : textColor === "text-yellow-800"
+                                        ? "text-yellow-600"
+                                        : "text-gray-500"
+                                    }`}
+                                  >
+                                    {statusText}
+                                  </p>
                                 </div>
                               </div>
-                            ))}
+                            );
+                          })}
+                        </div>
+
+                        {/* Legend */}
+                        <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded">
+                          <h5 className="font-medium text-blue-800 mb-2">📊 Match Status Legend</h5>
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
+                            <div className="flex items-center gap-2">
+                              <span className="text-lg">✅</span>
+                              <span className="text-blue-700">Fully Matched</span>
+                              <span className="text-blue-500">(Pattern + Database)</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span className="text-lg">🎯</span>
+                              <span className="text-blue-700">Pattern Only</span>
+                              <span className="text-blue-500">(Pattern matched, no database)</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span className="text-lg">❌</span>
+                              <span className="text-blue-700">No Match</span>
+                              <span className="text-blue-500">(Not in approved patterns)</span>
+                            </div>
                           </div>
                         </div>
-                      )}
+                      </div>
                     </div>
                   )}
 
@@ -310,34 +422,220 @@ function App() {
                             <span className="font-medium">Processing Time:</span> {ocrResult.ocr.processingTime}ms
                           </div>
                           <div>
-                            <span className="font-medium">Items Found:</span> {ocrResult.ocr.items.length}
+                            <span className="font-medium">Total Items Detected:</span> {ocrResult.ocr.items.length}
+                          </div>
+                          <div>
+                            <span className="font-medium">✅ Fully Matched:</span>{" "}
+                            {ocrResult.ocr.items.filter((item: any) => item.matched).length}
+                          </div>
+                          <div>
+                            <span className="font-medium">🎯 Pattern Only:</span>{" "}
+                            {
+                              ocrResult.ocr.items.filter(
+                                (item: any) => !item.matched && item.specificProduct && item.specificProduct.matched
+                              ).length
+                            }
+                          </div>
+                          <div>
+                            <span className="font-medium">❌ No Match:</span>{" "}
+                            {
+                              ocrResult.ocr.items.filter(
+                                (item: any) => !item.matched && (!item.specificProduct || !item.specificProduct.matched)
+                              ).length
+                            }
                           </div>
                         </div>
                       </div>
 
-                      {ocrResult.ocr.items.length > 0 && (
-                        <div className="bg-white border border-gray-200 rounded-lg p-4">
-                          <h4 className="font-medium text-gray-900 mb-3">Detected Items</h4>
-                          <div className="space-y-2">
-                            {ocrResult.ocr.items.map((item: any, index: number) => (
+                      {/* All Products with Match Status Indicators */}
+                      <div className="bg-white border border-gray-200 rounded-lg p-4">
+                        <h4 className="font-medium text-gray-900 mb-3">📋 All Detected Products</h4>
+                        <div className="space-y-3">
+                          {ocrResult.ocr.items.map((item: any, index: number) => {
+                            // Determine the match status and styling
+                            let statusColor = "gray";
+                            let statusIcon = "❌";
+                            let statusText = "No Pattern Match";
+                            let statusDescription = "Not in approved product patterns";
+
+                            if (item.matched) {
+                              // Full match (pattern + database)
+                              statusColor = "green";
+                              statusIcon = "✅";
+                              statusText = "Fully Matched";
+                              statusDescription = "Pattern matched + database verified";
+                            } else if (item.specificProduct && item.specificProduct.matched) {
+                              // Pattern match only (no database)
+                              statusColor = "yellow";
+                              statusIcon = "🎯";
+                              statusText = "Pattern Matched Only";
+                              statusDescription = "Matched pattern but not in database";
+                            }
+
+                            const bgColor =
+                              statusColor === "green"
+                                ? "bg-green-50"
+                                : statusColor === "yellow"
+                                ? "bg-yellow-50"
+                                : "bg-gray-50";
+                            const borderColor =
+                              statusColor === "green"
+                                ? "border-green-200"
+                                : statusColor === "yellow"
+                                ? "border-yellow-200"
+                                : "border-gray-200";
+                            const textColor =
+                              statusColor === "green"
+                                ? "text-green-800"
+                                : statusColor === "yellow"
+                                ? "text-yellow-800"
+                                : "text-gray-600";
+
+                            return (
                               <div
                                 key={index}
-                                className="flex justify-between items-center py-2 border-b border-gray-100 last:border-b-0"
+                                className={`flex justify-between items-center p-3 rounded border ${bgColor} ${borderColor}`}
                               >
-                                <div>
-                                  <p className="font-medium">{item.name}</p>
-                                  {item.matched && item.matchedProduct && (
-                                    <p className="text-sm text-gray-600">
-                                      Matched: {item.matchedProduct.name} ({item.matchedProduct.brand})
+                                <div className="flex-1">
+                                  <div className="flex items-center gap-2 mb-1">
+                                    <span className="text-lg">{statusIcon}</span>
+                                    <p className={`font-medium ${textColor}`}>{item.name}</p>
+                                  </div>
+                                  <p
+                                    className={`text-sm ${
+                                      textColor === "text-green-800"
+                                        ? "text-green-600"
+                                        : textColor === "text-yellow-800"
+                                        ? "text-yellow-600"
+                                        : "text-gray-500"
+                                    }`}
+                                  >
+                                    {statusDescription}
+                                  </p>
+                                  {item.specificProduct && (
+                                    <p className="text-sm text-blue-600 mt-1">
+                                      🎯 Pattern: {item.specificProduct.name} ({item.specificProduct.pattern})
+                                    </p>
+                                  )}
+                                  {item.matchedProduct && (
+                                    <p className="text-sm text-green-600 mt-1">
+                                      ✅ Product: {item.matchedProduct.name} ({item.matchedProduct.brand})
                                     </p>
                                   )}
                                 </div>
-                                <div className="text-right">
-                                  <p className="font-medium">₱{item.totalPrice}</p>
-                                  {item.matched && <p className="text-sm text-green-600">+{item.points} pts</p>}
+                                <div className="text-right ml-4">
+                                  <p className={`font-medium ${textColor}`}>₱{item.totalPrice}</p>
+                                  {item.points > 0 && <p className="text-sm text-green-600">+{item.points} pts</p>}
+                                  <p
+                                    className={`text-xs ${
+                                      textColor === "text-green-800"
+                                        ? "text-green-600"
+                                        : textColor === "text-yellow-800"
+                                        ? "text-yellow-600"
+                                        : "text-gray-500"
+                                    }`}
+                                  >
+                                    {statusText}
+                                  </p>
                                 </div>
                               </div>
-                            ))}
+                            );
+                          })}
+                        </div>
+
+                        {/* Legend */}
+                        <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded">
+                          <h5 className="font-medium text-blue-800 mb-2">📊 Match Status Legend</h5>
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
+                            <div className="flex items-center gap-2">
+                              <span className="text-lg">✅</span>
+                              <span className="text-blue-700">Fully Matched</span>
+                              <span className="text-blue-500">(Pattern + Database)</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span className="text-lg">🎯</span>
+                              <span className="text-blue-700">Pattern Only</span>
+                              <span className="text-blue-500">(Pattern matched, no database)</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span className="text-lg">❌</span>
+                              <span className="text-blue-700">No Match</span>
+                              <span className="text-blue-500">(Not in approved patterns)</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Debug Section - Show Raw OCR Data */}
+                      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                        <h4 className="font-medium text-yellow-800 mb-3">🔍 Debug: Raw OCR Data</h4>
+                        <div className="space-y-2 text-sm">
+                          <div className="mb-3">
+                            <span className="font-medium text-yellow-700">Total Items:</span>{" "}
+                            {ocrResult.ocr.items.length}
+                          </div>
+                          {ocrResult.ocr.items.map((item: any, index: number) => (
+                            <div key={index} className="p-3 border border-yellow-200 rounded bg-white">
+                              <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                  <p className="font-medium text-gray-900">Item {index + 1}:</p>
+                                  <p className="text-sm text-gray-600">Name: "{item.name}"</p>
+                                  <p className="text-sm text-gray-600">Price: ₱{item.totalPrice}</p>
+                                  <p className="text-sm text-gray-600">Quantity: {item.quantity}</p>
+                                </div>
+                                <div>
+                                  <p className="font-medium text-gray-900">Match Status:</p>
+                                  <p className={`text-sm ${item.matched ? "text-green-600" : "text-red-600"}`}>
+                                    Matched: {item.matched ? "✅ YES" : "❌ NO"}
+                                  </p>
+                                  <p className="text-sm text-gray-600">Points: {item.points}</p>
+                                  {item.matchedProduct && (
+                                    <p className="text-sm text-green-600">Product: {item.matchedProduct.name}</p>
+                                  )}
+                                </div>
+                              </div>
+                              {/* Show full item object for debugging */}
+                              <details className="mt-2">
+                                <summary className="cursor-pointer text-xs text-yellow-600 font-medium">
+                                  Show Full Item Data
+                                </summary>
+                                <pre className="mt-2 text-xs bg-gray-100 p-2 rounded overflow-auto">
+                                  {JSON.stringify(item, null, 2)}
+                                </pre>
+                              </details>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {ocrResult.ocr.items.filter((item: any) => !item.matched).length > 0 && (
+                        <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                          <h4 className="font-medium text-gray-700 mb-3">
+                            🚫 Filtered Out Items (Not in Product Patterns)
+                          </h4>
+                          <div className="space-y-2">
+                            {ocrResult.ocr.items
+                              .filter((item: any) => !item.matched)
+                              .map((item: any, index: number) => (
+                                <div
+                                  key={index}
+                                  className="flex justify-between items-center py-2 border-b border-gray-100 last:border-b-0 text-gray-500"
+                                >
+                                  <div>
+                                    <p className="font-medium">{item.name}</p>
+                                    <p className="text-sm text-gray-400">Not in approved product patterns</p>
+                                  </div>
+                                  <div className="text-right">
+                                    <p className="font-medium">₱{item.totalPrice}</p>
+                                  </div>
+                                </div>
+                              ))}
+                          </div>
+                          <div className="mt-3 p-3 bg-blue-50 border border-blue-200 rounded">
+                            <p className="text-sm text-blue-700">
+                              💡 These items were detected by OCR but filtered out because they don't match any specific
+                              product patterns. Only products listed in the product patterns are returned.
+                            </p>
                           </div>
                         </div>
                       )}

@@ -149,6 +149,8 @@ router.post("/", upload.single("receipt"), async (req, res) => {
     const matchedItems = [];
 
     for (const item of ocrResult.items) {
+      // Use the product matching service as the single source of truth
+      // This handles both pattern matching AND database lookup in one place
       const matchedProduct = await productMatchingService.findMatchingProduct(item);
 
       if (matchedProduct && matchedProduct._matchQuality !== "low") {
@@ -167,12 +169,16 @@ router.post("/", upload.single("receipt"), async (req, res) => {
             quality: matchedProduct._matchQuality,
           },
         });
+
+        console.log(`✅ [Product Matched] "${item.name}" → "${matchedProduct.name}" (${points} points)`);
       } else {
         matchedItems.push({
           ...item,
           matched: false,
           points: 0,
         });
+
+        console.log(`❌ [No Match] "${item.name}" - not in approved product patterns`);
       }
     }
 
