@@ -1566,7 +1566,7 @@ const PRODUCT_PATTERNS = {
     },
     {
       name: "Bear Brand Fortified",
-      patterns: [/45000\s*a\s*RTIFIED/i, /BEAR\s+B\s+FORT\d+[A-Za-z]*/i, /BEAR\s+BIECRTEA0/i],
+      patterns: [/45000\s*a\s*RTIFIED/i, /BEAR\s+B\s+FORT\d+[A-Za-z]*/i, /BEAR\s+BIECRTEA0/i, /BEAR\s+8\s+FORTI000/i], 
     },
     {
       name: "Nescafe Gold 2g",
@@ -1578,8 +1578,18 @@ const PRODUCT_PATTERNS = {
     },
     {
       name: "NIDO3+PRE-S2.4KG",
-      patterns: [/MIO034PRE-S7./i, /NIDO3\+PRE-S2\.4KG/i],
+      patterns: [/MIO034PRE-S7./i, /NIDO3\+PRE-S2\.4KG/i, ],
     },
+
+    {
+      name: "BONAKID P-S 3+ 2.4kg",
+      patterns: [
+        /^\d+\s+BONAKID\s*P-?S\s*3\+\s*2\.4$/i,
+        /^\d+\s+BONAKID\s*P-?S\s*3\+\s*2\.4[kKgGq9]?$/i
+      ]
+    }
+
+
   ],
 
   // Generic patterns removed - now handled by smart detection in ocrHelpers.js
@@ -1604,6 +1614,7 @@ const PRODUCT_PATTERNS = {
     { pattern: /150\.007/i, replacement: "1150.00" },
     { pattern: /1150/i, replacement: "1150.00" },
     { pattern: /(\d+)\.(\d{3})/i, replacement: "$1$2.00" }, // Fix decimal places
+    { from: /150\.007/i, to: "1150.00" },
   ],
 };
 
